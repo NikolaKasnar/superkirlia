@@ -30,6 +30,8 @@ class Kirlia extends Character{
   //Originalna koordinata Y; pomaže kod skakanja, za kontrolu da se ne skače u
   //nedogled
   int ogY;
+  //Varijabla koja govori koliko bodova ima K
+  int points = 0;
   //Vraća platformu iznad koje je trenutno K
   Rectangle getCurrentlyAbove(){
     return currentlyAbove;
@@ -222,5 +224,21 @@ class Kirlia extends Character{
   //Vraća se zastavica za pad
   boolean getFall(){
     return fall;
+  }
+  //Vraća centar K
+  Point getCenter(){
+    return new Point(x + width/2, y + height/2);
+  }
+  //Funckija inkrementira broj bodova za 10
+  void incrementPoint(){
+    points += 10;
+  }
+  //Funckija koja inkrementira broj bodova za zadani broj
+  void incrementPoint(int number){
+    points += number;
+  }
+  //Vraća broj bodova
+  int getPoints(){
+    return points;
   }
 }

@@ -70,6 +70,9 @@ Rectangle r2;
 Rectangle r3;
 Rectangle floor;
 Rectangle[] r;
+Point[] coinPoints;
+Coin coin;
+int coinIndex;
 void setup(){
   
   size(700, 700);
@@ -97,8 +100,8 @@ void setup(){
   r3.setH(20);
   r3.setW(70);
   
-  k2.setX(200);//POTREBNO ISTO POSTAVITI NA POCETKU
-  k2.setX(200);
+  k2.setOgX(400);//POTREBNO ISTO POSTAVITI NA POCETKU
+  k2.setX(400);
   k2.setOgY(578);//POTREBNO ISTO POSTAVITI NA POCETKU
   k2.setY(578);
   k2.setHeigth(20);
@@ -116,6 +119,18 @@ void setup(){
   r[1] = r2;
   r[2] = r3;
   r[3] = floor;
+  
+  coinIndex = 0;
+  
+  coinPoints = new Point[2];
+  Point p1 = new Point(585, 585);
+  Point p2 = new Point(220, 585);
+  coinPoints[0] = p1;
+  coinPoints[1] = p2;
+  
+  coin = new Coin();
+  coin.setCenter(coinPoints[coinIndex]);
+  coin.setRadius(30);
 }
 
 void draw(){
@@ -123,17 +138,20 @@ void draw(){
   update();
   
   background(0);
-  k2.draw();
+ 
   r1.draw();
   r2.draw();
   r3.draw();
   floor.draw();
+  coin.draw();
+  k2.draw();//ZADNJE SE CRTA
 //  println(k2.isAbove(r[2]));
   
 }
 
-//PROVJERI DA LI JE KIRLIA SLUCAJNO SKOCILA,
-//ILI AKO SLUCAJNO PADA
+//Radi provjere kod raznih događaja koje se mogu dogoditi. Provjerava
+//interakciju sa Kirliom i okolinom. Provjerava se skakanje, padanje
+//interakcija s neprijateljima i skupljanje novčića
 void update(){
 
   //update padanja
@@ -168,7 +186,10 @@ void update(){
     }
   }*/
   
-  //PROVJERA DA SE NE SKOCI PREVISOKO, ILI DOK SE PADA DA NESTO NIJE POSLO PO ZLU
+  //provjera kod skakanja, ovim dijelom se kontrolira granica skakanja,
+  //isto tako se kontrolira da nešto kod skakanja nije pošlo po zlu.
+  //Ako dođe do toga, onda se K prebacuje u stanje padanja, i sve se
+  //"resetira"
   int oGTemp = k2.getOgY();
   int temp = k2.getY();
     
@@ -183,8 +204,31 @@ void update(){
   
   //DODATI PROVJERAVANJE DA SE NE ODE IZVAN EKRANA... 
   
+  //DODATI PROVJERAVANJE ZA NEPRIJATELJ I ZA SKUPLJANJE NOVČIĆA
+  if(calculateDistance(k2.getCenter(),coin.getCenter()) < 5){
+    k2.incrementPoint();
+    coinIndex++;
+    if(coinIndex >= coinPoints.length){
+      coinIndex = 0;
+    }
+    coin.setCenter(coinPoints[coinIndex]);
+  }
 }
 
+int calculateDistance(Point a, Point b){
+  int first = a.getX() - b.getX();
+  int second = a.getY() - b.getY();
+  return (int)Math.sqrt(first*first + second*second);
+}
+
+//Proverava iznad koje je platforme lik. Provjera se radi tako da se gledaju sve
+//postojeće platforme, i onda koja je zaista ispod lika, i koja je najbliža
+//liku, je ona prava platforma kroz koju lik "ne propada"
+//već stoji na toj platformi. Funkcija pomaže kod skakanja po platformama
+//NAPOMENA: NEKI DIJELOVI KOJI SU KOMENTIRANI SU OSTAVLJENI JER SU DIJELOVI
+//JEDNE IDEJE KOJA RADI, ALI NIJE ISTRAŽENA DO KRAJA. MOŽE SE
+//SKAKANJE OPTIMIRATI S TIM DIJELOVIMA. U OVOJ VERZIJI SE NE PREPORUČA SAMO
+//ODKOMENTIRAVANJE BEZ PROVJERE PRIJE, JER MOŽDA NEĆE SVE RADITI KAKO TREBA.
 Rectangle calculateBelow(){
     //PROBLEM JE U OVOME... ZASTO NEKAD PADA, NEKAD OSTAJE
     //MOZE BEZ TOGA, ALI ONDA SE SVAKI PUT TO RACUNA
@@ -222,6 +266,11 @@ void mousePressed(){
    println(" ");
 }*/
 
+void mousePressed(){
+  println(k2.getX() + " " + k2.getY());
+  println(k2.getCenter());
+  println(" " + k2.getPoints() + " ");
+}
 void keyPressed(){
   k2.keyPressed();
 }
