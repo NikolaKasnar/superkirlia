@@ -73,6 +73,8 @@ Rectangle[] r;
 Point[] coinPoints;
 Coin coin;
 int coinIndex;
+Enemy e;
+int enemyTimer;
 void setup(){
   
   size(700, 700);
@@ -131,6 +133,18 @@ void setup(){
   coin = new Coin();
   coin.setCenter(coinPoints[coinIndex]);
   coin.setRadius(30);
+  
+  e = new Enemy();
+  e.setX(300);
+  e.setY(550);
+  e.setOgX(300);
+  e.setOgY(550);
+  e.setHeigth(50);
+  e.setWidth(30);
+  e.setDistance(30);
+  
+  enemyTimer = 0;
+  
 }
 
 void draw(){
@@ -144,6 +158,7 @@ void draw(){
   r3.draw();
   floor.draw();
   coin.draw();
+  e.draw();
   k2.draw();//ZADNJE SE CRTA
 //  println(k2.isAbove(r[2]));
   
@@ -204,7 +219,7 @@ void update(){
   
   //DODATI PROVJERAVANJE DA SE NE ODE IZVAN EKRANA... 
   
-  //DODATI PROVJERAVANJE ZA NEPRIJATELJ I ZA SKUPLJANJE NOVČIĆA
+  
   if(calculateDistance(k2.getCenter(),coin.getCenter()) < 5){
     k2.incrementPoint();
     coinIndex++;
@@ -213,6 +228,26 @@ void update(){
     }
     coin.setCenter(coinPoints[coinIndex]);
   }
+  
+  if(enemyTimer >= 150){
+    enemyTimer = 0;
+  }else if(enemyTimer > 0){
+    enemyTimer++;
+    
+    //MOZDA NEPOTREBNO
+    if(calculateDistance(k2.getCenter(), e.getCenter()) > 20){
+      enemyTimer = 0;
+    }
+  }else if(enemyTimer == 0){
+    //udaljenost
+  // println("da");
+    if(calculateDistance(k2.getCenter(), e.getCenter()) < 20){
+      k2.removeHealth();
+      enemyTimer++;
+    }
+  }
+  
+ // println(k2.getHealth() + " " + k2.getPoints());
 }
 
 int calculateDistance(Point a, Point b){
@@ -267,9 +302,11 @@ void mousePressed(){
 }*/
 
 void mousePressed(){
-  println(k2.getX() + " " + k2.getY());
+  /*println(k2.getX() + " " + k2.getY());
   println(k2.getCenter());
-  println(" " + k2.getPoints() + " ");
+  println(" " + k2.getPoints() + " ");*/
+  println(e.getCenter());
+  println(e.x + " " + e.y);
 }
 void keyPressed(){
   k2.keyPressed();

@@ -32,6 +32,24 @@ class Kirlia extends Character{
   int ogY;
   //Varijabla koja govori koliko bodova ima K
   int points = 0;
+  //Broj koji označava broj života od K
+  int health = 5;
+  //Makni jedan život
+  void removeHealth(){
+    health -= 1;
+  }
+  //Makni određen broj života
+  void removeHealth(int number){
+    health -= number;
+  }
+  //Postavi broj života; originalno je 5
+  void setHealth(int number){
+    health = number;
+  }
+  //Vrati broj života
+  int getHealth(){
+    return health;
+  }
   //Vraća platformu iznad koje je trenutno K
   Rectangle getCurrentlyAbove(){
     return currentlyAbove;
