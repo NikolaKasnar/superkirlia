@@ -1,7 +1,6 @@
 //Predstavlja jednu platformu, na koju se između može skočiti, i
-//može se hodati po njoj. Inaće se ne crta, osim kod provjere postavljanja. 
-//Služi samo da lik Kirlia zna kud treba skakati, i objekti ove klase
-//će zapravo biti postavljeni na mjesto na kojem su naslikani na pozadinskoj slici
+//može se hodati po njoj.
+
 class Rectangle{
   //------------------podaci klase----------------
   //X koordinata gornjeg lijevog kuta
@@ -13,20 +12,24 @@ class Rectangle{
   //Širina platforme
   int w;
   //Boja za popunjavanje platforme
-  int fillColor = 255;
-  //Boja za obrub platforme
-  int borderColor = 255;
+  int fillColor1=154;
+  int fillColor2=27;
+  int fillColor3=21;
+  //Boja za obrub platforme - u ovoj verziji se ne koristi (nema obruba)
+  int borderColor = 200;
+  //određuje je li u pitanju pod ili ne
+  boolean floor;
   
   //------------------------------------------metode klase----------------------------------------------------------
   
-  //Crta platformu. 
-  // Ova funkcija se poziva samo kad se postavljaju platforme ili kad se neke funkcije provjeravaju. 
-  //Inače u pravoj verziji igre se ne crtaju (prazna funkcija)
+  //crta platformu
   void draw(){
-    /*fill(fillColor);
-    stroke(borderColor);
-    rect(x, y, w, h);*/
-    }
+      fill(fillColor1,fillColor2,fillColor3);
+      noStroke();
+      circle(x+h/2,y+h/2,h);
+      circle(x+w-h/2,y+h/2,h);
+      rect(x+h/2, y, w-h, h);
+  }
   
   //......................funkcije koje vraćaju dimenzije platforme..................
   
@@ -60,7 +63,11 @@ class Rectangle{
   //..........................set funkcije.....................................
   
     //Postavlja boju za popunjavanje
-  void setFillColor(int fC){   fillColor = fC;  }
+  void setFillColor(int fc1, int fc2, int fc3){ 
+    fillColor1=fc1;
+    fillColor2=fc2;
+    fillColor3=fc3;
+  }
   
   //Postavlja boju za obrub
   void setBorderColor(int bC){ borderColor = bC;  }
@@ -76,4 +83,9 @@ class Rectangle{
   
   //Postavlja y koordinatu
   void setY(int Y){    y = Y;  }
+  
+  //Postavlja je li pod ili ne
+  void setfloor(boolean b){
+    floor=b;
+  }
 }

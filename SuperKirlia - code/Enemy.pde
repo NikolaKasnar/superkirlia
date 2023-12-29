@@ -15,16 +15,40 @@ class Enemy extends Character{
   //od početnog mjesta ulijevo, odnosno udesno
   int distance;
   //slika neprijatelja
-  PImage imgEnemy;
+  PImage imgEnemy = loadImage("e1.png");
+  //prati je li neprijatelj eksplodirao
+  boolean explode = false;
+  //koliko je pucnjeva potrebno Kirliji da ga ubije
+  int health;
+  //je li u pitanju veliki neprijatelj
+  boolean boss;
+  
+  //konstruktori
+  Enemy(){
+    
+  }
+  
+  Enemy(int trenx, int treny, int vis, int sir, int origx, int origy, int dist, PImage img, int h, boolean b){
+   x=trenx;
+   y=treny;
+   height=vis;
+   width=sir;
+   ogX=origx;
+   ogY=origy;
+   distance=dist;
+   imgEnemy=img;
+   health=h;
+   boss=b;
+  }
   
   //-----------------metode klase--------------  
   //Nacrtaj objekt
   void draw(){
     update();
-    image(imgEnemy, x - 110, y - 55); 
+    image(imgEnemy,x,y);
     }
   
-  //Pomakni objekt ulijevo/udesno, i ako je objekt otišao dovoljno ulijevo/udesno, onda promijeni smijer pomicanja
+  //Pomakni objekt ulijevo/udesno, i ako je objekt otišao dovoljno ulijevo/udesno, onda promijeni smjer pomicanja
   void update(){
     if(right){
       moveRight();
@@ -42,7 +66,11 @@ class Enemy extends Character{
     }
 
   //Mijenja velicinu slike
-  void scale(int numberW, int numberH){  imgEnemy.resize(numberW, numberH);  }
+  void scale(int numberW, int numberH){
+    imgEnemy.resize(numberW, numberH);
+    this.width=numberW;
+    this.height=numberH;
+  }
   
   //..........................funkcije inkrementa/dekrementa.....................    
     //Pomakni objekt udesno
@@ -53,13 +81,17 @@ class Enemy extends Character{
     
   //...........................get funkcije.................................
   //Vrati centar objekta
-  Point getCenter(){ return new Point(x + width/2, y + height/2);  }
+  Point getCenter(){ return new Point(x + this.width/2, y + this.height/2);  }
+  
+  //Vrati x ili y
+  int getX(){ return x; }
+  int getY(){ return y; }
   
   //Vraca sliku
   PImage getImage(){  return imgEnemy;  }
     
   //..............................set funkcije........................
-    //Postavi udaljenost
+  //Postavi udaljenost
   void setDistance(int number){ distance = number;  }
     
   //Postavi originalni x
@@ -68,7 +100,12 @@ class Enemy extends Character{
   //Postavi originalni y
   void setOgY(int number){  ogY = number; }
   
-    //Postavlja sliku
+  //Postavlja sliku
   void setImage(PImage img){ imgEnemy = img;  }
   
+  //Postavlja snagu
+  void health(int h){ health=h; }
+  
+  //Postavlja je li veliki neprijatelj
+  void isboss(boolean b){ boss=b; }
 }

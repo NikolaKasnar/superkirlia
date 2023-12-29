@@ -1,5 +1,14 @@
   import processing.sound.*; 
-
+  
+  //razne pomocne varijable
+  int pogodak=0;
+  Point p;
+  int j=0;
+  PImage tmp;
+  Enemy m;
+  ArrayList<Enemy> pom;
+  int po=0;
+  
 //Klasa koja prestavlja jedan level. Incijalizira se sve u pocetnom programu.
 //U klasi se nalaze razne funkcije za upravljanje igrom.
 class Level{
@@ -9,7 +18,7 @@ class Level{
   //Glavni lik
   Kirlia kirlia;
   //Neprijatelj koji moze raniti glavnog lika ako ga se ne izbjegne
-  Enemy e;
+  ArrayList<Enemy> e=new ArrayList<Enemy>();
   //Novcic koji se skuplja kako bi se level prosao
   Coin coin;
   //Sve pozicije novcica; moze ih biti limitirano malo, barem 2 vise zbog neke logike
@@ -32,14 +41,14 @@ class Level{
   
   //---------------------metode klase----------------------
   //Konstruktor
-  Level(int numberMaxPoints, Kirlia k, Enemy enemy, 
+  Level(int numberMaxPoints, Kirlia k, ArrayList<Enemy> enemy, 
     ArrayList<Point> coins, ArrayList<Rectangle> rectangle, PImage img, SoundFile cs, SoundFile es){
   
     setupL(numberMaxPoints, k, enemy, coins, rectangle, img, cs, es);
     }
     
   //Funkcija koja sve na pocetku levela (u trenutku njegovog stvaranja) inicijalizira
-  void setupL(int numberMaxPoints, Kirlia k, Enemy enemy, ArrayList<Point> coins, ArrayList<Rectangle> rectangle, PImage img, SoundFile cs, SoundFile es){
+  void setupL(int numberMaxPoints, Kirlia k, ArrayList<Enemy> enemy, ArrayList<Point> coins, ArrayList<Rectangle> rectangle, PImage img, SoundFile cs, SoundFile es){
      //inicijalizacija podataka klase
       kirlia = k;
       maxPoints = numberMaxPoints;
@@ -69,27 +78,94 @@ class Level{
     
       //u slučaju gubitka (health=0) ili pobjede (maxpoints=0) ili neispunjenja ijednog uvjeta (nastavak igre), funkcija vraća različite vrijednosti
         if(kirlia.getHealth() == 0){
+                pogodak=0;
                 return 3;//gubitak
                 
             }else if(kirlia.getHealth() > 0 && maxPoints == collectedCoins){
                 return 2;//pobjeda
                 
             }else{
-                 //crta pozadinu
-                  background(bg);
-    
-                   //crta novćić
-                  coin.draw();
+                 //crta pozadinu i gumb za mute
+                   background(bg);
+                   image(kon,930,20);
+                   
+                   //crta novcic
+                   coin.draw();
     
                   //crta platforme
-                    for(int i = 0; i < platforms.size(); i++){  platforms.get(i).draw(); }
-    
+                   for(int i = 0; i < platforms.size(); i++){  platforms.get(i).draw(); }
+                  
+                  
+                  //ako se dogodio pucanj
+                  if(kirlia.pucanjleft || kirlia.pucanjright){
+                    if(kirlia.pucanjleft){
+                      image(pew,kirlia.px-40-kirlia.putanja,kirlia.py-40);
+                      if(!mute && kirlia.putanja==0) play(pewsound);
+                      kirlia.putanja+=6;
+                      if(kirlia.px-kirlia.putanja<40){
+                        kirlia.pucanjleft=false;
+                        kirlia.pucanjright=false;
+                        kirlia.px=0;
+                        kirlia.py=0;
+                        kirlia.putanja=0;
+                    }
+                  }
+                    else if(kirlia.pucanjright){
+                      image(pew,kirlia.px+40+kirlia.putanja,kirlia.py-40);
+                      if(kirlia.putanja==0) play(pewsound);
+                      kirlia.putanja+=6;
+                      if(kirlia.px+kirlia.putanja>1040){
+                        kirlia.pucanjright=false;
+                        kirlia.pucanjleft=false;
+                        kirlia.px=0;
+                        kirlia.py=0;
+                        kirlia.putanja=0;
+                      }
+                    }
+                  }
+                  
+                  if(e != null){  
+                  for(int i=0; i<e.size();i++){
+                    if(e.get(i).explode){  //crtanje eksplozije neprijatelja ako je ubijen
+                      if(j==0 && !mute) explosionsound.play();
+                      Point temp=e.get(i).getCenter();
+                      image(expl,temp.getX()-10-j/2,temp.getY()-10-j);
+                      expl.resize(30+j,30+j);
+                      j+=2;
+                      
+                     if(j>40){
+                       j=0;
+                       e.get(i).explode=false;
+                       e.remove(i);
+                     }
+                     }
+                  }
+                   
+                   
+                   for(int i=0;i<e.size();i++){
+                   //crta bol oko neprijatelja
+                     if(po>0){
+                       image(enemypain,e.get(i).x-2,e.get(i).y-2,e.get(i).width,e.get(i).height);
+                       po--;
+                     }
+                   
                    //crta neprijatelja
-                  if(e != null){  e.draw(); }
+                        Enemy temp=e.get(i);
+                        if (!temp.explode) temp.draw();
+                     }
+                   }
+                  
+                  
+                   if(pogodak!=0){
+                     image(pain,kirlia.getX()-43,kirlia.getY()-75);
+                     pogodak--;
+                   }
     
                    //crta lika Kirliu
                     kirlia.draw();
-    
+                    
+                    
+                    
                    //ispis bodova i zdravlja ako je potrebno
                      int health = kirlia.getHealth();
                      int points = kirlia.getPoints();
@@ -118,7 +194,9 @@ class Level{
       }
     
     //update padanja
-    if(!kirlia.isAbove(kirlia.getCurrentlyAbove())){  kirlia.setFall(true); }
+    if(!kirlia.isAbove(kirlia.getCurrentlyAbove())){
+      kirlia.setFall(true);
+    }
      
     //update skakanja, da se ne moze bas skociti u nedogled
      if(kirlia.getJump()){
@@ -131,13 +209,15 @@ class Level{
       }
     }
     
+    //Iduca funkcija je iz prijasnje verzije, uzrokovala je bug na trecem
+    //levelu, pa se u ovoj verziji ne koristi
     //provjera kod skakanja, ovim dijelom se kontrolira granica skakanja,
     //isto tako se kontrolira da nešto kod skakanja nije pošlo po zlu.
     //Ako dođe do toga, onda se K prebacuje u stanje padanja, i sve se
     //"resetira"
+    /*
     int oGTemp = kirlia.getOgY();
     int temp = kirlia.getY();
-      
     if(Math.abs(oGTemp - temp) >= 150){
       kirlia.setOgX(kirlia.getX());
       kirlia.setY(kirlia.getY());
@@ -146,40 +226,90 @@ class Level{
       kirlia.setFallTime(0);//jer ako dode do ovog, znamo da je ''nesto poslo po krivu''
       //treba sve ''resetirati'', i lik treba pasti na pravo mjesto
     }
+    */
     
     //ako pokupi novcic
-    if(calculateDistance(kirlia.getCenter(),coin.getCenter()) < 25){
+    if(calculateDistance(kirlia.getCenter(),coin.getCenter()) < 30){
       kirlia.incrementPoint();
       collectedCoins++;
       currentCoin++;
       if (currentCoin >= positionOfCoins.size()){ currentCoin=0; }
-      coin_sound.play();
+      if(!mute) coin_sound.play();
       coin.setCenter(positionOfCoins.get(currentCoin));
     }
     
-    //
+    //je li neprijatelj ozljedio Kirliju i je li ga ona upucala
     if(e != null){
-        if(enemyTimer >= 150){
+        if(enemyTimer >= 1000){
           enemyTimer = 0;
-        }else if(enemyTimer > 0){
+        }
+        else if(enemyTimer > 0){
           enemyTimer++;
-          
-          //MOZDA NEPOTREBNO
-            if(calculateDistance(kirlia.getCenter(), e.getCenter()) > 20){
+          for(int i=0;i<e.size();i++){
+            if(calculateDistance(kirlia.getCenter(), e.get(i).getCenter()) > 30){
               enemyTimer = 0;
+            }
           }
-        }else if(enemyTimer == 0){
-            if(calculateDistance(kirlia.getCenter(), e.getCenter()) < 20){
+        }
+        else if(enemyTimer == 0 && pogodak==0){
+          for(int i=0;i<e.size();i++){
+            if(e.get(i).boss==true){
+              if(calculateDistance(kirlia.getCenter(), e.get(i).getCenter())<50){
+                pogodak+=30;
                 kirlia.removeHealth();
                 enemyTimer++;
-                enemy_sound.play();
+                if(!mute) enemy_sound.play();
                 }
+            }
+            if(calculateDistance(kirlia.getCenter(), e.get(i).getCenter()) < 30){
+                pogodak+=30;
+                kirlia.removeHealth();
+                enemyTimer++;
+                if(!mute) enemy_sound.play();
+                }
+          }
+        }
+        for(int i=0;i<e.size();i++){
+        if(kirlia.pucanjleft){
+          p=new Point(kirlia.px-40-kirlia.putanja,kirlia.py);
+          if(calculateDistance(p,e.get(i).getCenter())<40){
+            kirlia.pucanjleft=false;
+            kirlia.pucanjright=false;
+            kirlia.putanja=0;
+            kirlia.px=0;
+            kirlia.py=0;
+            e.get(i).health--;
+            if (e.get(i).health==0) e.get(i).explode=true;
+            else{
+              if(!mute) enemy_sound.play();
+              po+=30;
+            }
+          }
+        }
+        if(kirlia.pucanjright){
+          p=new Point(kirlia.px+40+kirlia.putanja,kirlia.py);
+          if(calculateDistance(p,e.get(i).getCenter())<40){
+            kirlia.pucanjright=false;
+            kirlia.pucanjleft=false;
+            kirlia.putanja=0;
+            kirlia.px=0;
+            kirlia.py=0;
+            e.get(i).health--;
+            if (e.get(i).health==0) e.get(i).explode=true;
+            else{
+              if(!mute) enemy_sound.play();
+              po+=30;
+            }
         }
       }
-        
-    if(kirlia.getY() > 600){
-      kirlia.setY(578);
-      kirlia.setOgY(578);
+    }
+  }
+    
+    
+    //da Kirlia ne izađe izvan prozora
+    if(kirlia.getY()+22 > platforms.get(0).y){
+      kirlia.setY(platforms.get(0).y-22);
+      kirlia.setOgY(platforms.get(0).y-22);
     }
   }
   
@@ -190,12 +320,12 @@ class Level{
     return (int)Math.sqrt(first*first + second*second);
     }
   
-  //Proverava iznad koje je platforme lik. Provjera se radi tako da se gledaju sve
+  //Provjerava iznad koje je platforme lik. Provjera se radi tako da se gledaju sve
   //postojeće platforme, i onda koja je zaista ispod lika, i koja je najbliža
   //liku, je ona prava platforma kroz koju lik "ne propada"
   Rectangle calculateBelow(){
 
-        int min = 1000;//neki veliki broj
+        int min = 2000;//neki veliki broj
         Rectangle temp = platforms.get(0);
         for(int i = 0; i < platforms.size(); i++){
           
@@ -239,12 +369,40 @@ class Level{
   void setPoints(int pointsK){  kirlia.setPoints(pointsK); }
   
   //.........................reset funkcije........................
-  //postavlja indeks trenutnog novcica
-  void resetlevel(){ 
+  void resetlevel(int level){ 
       kirlia.setHealth(5);
       kirlia.setPoints(0);
       collectedCoins=0;
-      kirlia.setY(578);
-      kirlia.setX(400);
+      if(level<2){
+        kirlia.setY(578);
+        kirlia.setX(400);
+      }
+      else{
+        kirlia.setY(678);
+        kirlia.setX(400);
+      }
+      kirlia.pucanjleft=false;
+      kirlia.pucanjright=false;
+      kirlia.putanja=0;
+      tmp=loadImage("e1.png");
+      if(level==0) e=null;
+      if(level==1){
+        e.clear();
+        e.add(new Enemy(200,220,50,30,200,220,50,tmp,1,false));
+        e.get(0).scale(250,150);
+        }
+      if(level==2){
+        e.clear();
+        e.add(new Enemy(200,220,50,30,200,220,50,tmp,1,false));
+        e.add(new Enemy(300,80,50,30,300,80,40,tmp,1,false));
+        e.get(0).scale(250,150);
+        e.get(1).scale(250,150);
+      }
+      PImage tmp2=loadImage("e1.png");
+      if(level==3){
+        e.clear();
+        e.add(new Enemy(550,520,200,150,550,520,50,tmp2,3,true));
+        e.get(0).scale(350,250);
+      }
     }
 }

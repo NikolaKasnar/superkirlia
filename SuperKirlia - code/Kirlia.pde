@@ -11,6 +11,11 @@ class Kirlia extends Character{
   //Broj koji označava broj života od K
   int health = 5;
   
+  //kontrola za pucanje
+  int putanja = 0;
+  int px;
+  int py;
+  
   //.................state-flags......................
   //Govori da li je K u stanju kretanja lijevo
   boolean moveLeft = false;
@@ -20,6 +25,9 @@ class Kirlia extends Character{
   boolean jump = false;
   //Govori da li je K u stanju padanja
   boolean fall = false;
+  //je li se dogodio pucanj
+  boolean pucanjright = false;
+  boolean pucanjleft = false;
   
   //...................kontrola-skoka................
   //Originalna koordinata X; pomaže kod skakanja, za kontrolu da se ne skače unedogled
@@ -81,6 +89,16 @@ class Kirlia extends Character{
       ogY = y;
       jump = true;
       }
+      
+     if(key == ' '){
+       if(pucanjleft==false & pucanjright==false){
+         px=x;
+         py=y;
+         
+         if (moveRight==true || (moveRight==false & moveLeft==false)) pucanjright = true;
+         if (moveLeft==true) pucanjleft=true;
+       }
+     }
     }
   
   //Funkcija koja updatea gdje se nalazi K. Kreće se gore, dolje, lijevo, ili desno, ovisno o postavljenim zastavicama
@@ -95,8 +113,8 @@ class Kirlia extends Character{
     
     //ako je zastavica za fall dignuta
     if(fall){ 
-      y += 3;                  
-    }                        
+      y += 4;                  
+    }         
   }
   
   //Funkcija crta K
@@ -105,6 +123,8 @@ class Kirlia extends Character{
     update();    
     //zatim se nacrta slika
     image(imgKirlia, x - 34, y - 65);
+    
+    
     }
   
   //Funckija gleda da li je lik iznad neke platforme(class rectangle) R. Bitno da je barem jedan kut lika iznad platforme. 
@@ -114,8 +134,7 @@ class Kirlia extends Character{
     Point B = R.returnRUPoint();
     
     //uspoređujemo ih sa koordinatama kirlie
-    //za drugi uvjet dovoljno samo x+width
-     if( y < A.getY() && (x > A.getX() || (x + width) > A.getX()) && x < B.getX()){
+     if( y < A.getY() && ((x > A.getX() || (x + width) > A.getX())) && x < B.getX()){
         return true;
       }else{
         return false;
@@ -189,13 +208,19 @@ class Kirlia extends Character{
   //Vraća se Y
   int getY(){ return y; }
   
-     //Vrati broj života
+  //Vraća točku (x,y)
+  Point getXY(){
+    p= new Point(x,y);
+    return p;
+  }
+  
+  //Vrati broj života
   int getHealth(){ return health; }
   
   //Vraća platformu iznad koje je trenutno K
   Rectangle getCurrentlyAbove(){ return currentlyAbove; }
   
-    //Vraća fallTime
+  //Vraća fallTime
   int getFallTime(){ return fallTime; }
   
   
