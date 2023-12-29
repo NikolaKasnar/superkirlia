@@ -8,7 +8,7 @@ Popis napravljenih poboljšanja projekta:\
 •	dodavanje crvene „boli“ oko Kirlije i neprijatelja kad su ozlijeđeni, te eksplozije kad neprijatelj umre\
 •	prebacivanje platformi po kojima se Kirlija kreće na razinu koda (brisanje sa postojeće pozadine)\
 •	dodavanje zvuka pri pobjedi/gubitku, pucanju, eksploziji\
-•	dodavanje gumba za stišavanje zvuka\
+•	dodavanje gumba za stišavanje zvuka
 
 Daljnja moguća poboljšanja:\
 •	dodavanje novih levela, s novim pozadinama\
@@ -16,4 +16,4 @@ Daljnja moguća poboljšanja:\
 •	dodavanje različitih vrsta novčića ili neprijatelja\
 •	biranje težine igre na početku (npr. smanjen health za Kirliju pri „hard mode“ i sl.)\
 •	mogućnost biranja drukčijeg glavnog lika\
-•	dodavanje multiplayer opcije\
+•	dodavanje multiplayer opcije
