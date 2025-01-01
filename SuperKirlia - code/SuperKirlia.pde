@@ -3,6 +3,7 @@
   //PImage drugi;
   PImage nova;
   PImage treci;
+  PImage peti;
   PImage menu, won, lost;
   
   //pojavi se oko Kirlie/neprijatelja kad su ozlijeđeni
@@ -39,6 +40,8 @@
   Kirlia k1;
   Kirlia k3;
   Kirlia k4;
+  Kirlia k5;
+  Kirlia k6;
   
   //objekti klase Rectangle koji predstavljaju podloge, i pripadna lista
   Rectangle r1;
@@ -47,6 +50,7 @@
   Rectangle r4, r5, r6;
   Rectangle r7,r8;
   Rectangle r9,r10;
+  Rectangle r11, r12, r13, r14;
   Rectangle[] r;
   
   //objekti klase Rectangle koji predstavljaju podove, i pripadna lista
@@ -54,6 +58,8 @@
   Rectangle floor2;
   Rectangle floor3;
   Rectangle floor4;
+  Rectangle floor5;
+  Rectangle floor6;
   ArrayList<Rectangle> allFloors;
   
   //lista lokacija novcica
@@ -64,14 +70,17 @@
   Enemy e1;
   Enemy e2;
   Enemy e3;
+  Enemy e4, e5, e6, e7;
   
   //objekti klase level i njihova lista, te brojač levela
   Level l;
   Level l2;
   Level l3;
   Level l4;
+  Level l5;
+  Level l6;
   ArrayList<Level> allLevels;
-  int currentLevel; //0=prvi level, 1=drugi level, 2=treci level, 3=cetvrti level
+  int currentLevel; //0=prvi level, 1=drugi level, 2=treci level, 3=cetvrti level, 4=peti level, 5=sesti level
   
   //gumbi za početak, izlazak iz igre i stisavanje zvuka
   ButtonMenu menuButton;
@@ -107,6 +116,10 @@
     // Pozadina za treci i cetvrti level
     treci = new PImage();
     treci = loadImage("treci.jpg");
+    
+    // Pozadina za peti i sesti level
+    peti = new PImage();
+    peti = loadImage("peti.jpg");
     
     pain = new PImage();
     pain = loadImage("pain.png");
@@ -166,6 +179,7 @@
     pauseButton.setWidth(50);
     
     //....................inicijalizacija podloga....................
+    // Podloge za prvi level
     r1 = new Rectangle();
     r1.setX(361);
     r1.setY(442);
@@ -173,6 +187,7 @@
     r1.setW(316);
     r1.setfloor(false);
     
+    // Podloge za drugi level
     r2 = new Rectangle();
     r2.setX(7);
     r2.setY(325);
@@ -187,6 +202,7 @@
     r3.setW(327);
     r3.setfloor(false);
     
+    // Podloge za treci i cetvrti level
     r4 = new Rectangle();
     r4.setX(200);
     r4.setY(180);
@@ -228,7 +244,40 @@
     r10 = new Rectangle();
     r10=r3;
     
+    // Podloge za peti level, zelena boja oznacava seriju visih levela
+    r11 = new Rectangle();
+    r11.setX(300);
+    r11.setY(442);
+    r11.setH(48);
+    r11.setW(400);
+    r11.setFillColor(80,200,20);
+    r11.setfloor(false);
     
+    r12 = new Rectangle();
+    r12.setX(0);
+    r12.setY(300);
+    r12.setH(48);
+    r12.setW(400);
+    r12.setFillColor(80,200,20);
+    r12.setfloor(false);
+    
+    r13 = new Rectangle();
+    r13.setX(600);
+    r13.setY(300);
+    r13.setH(48);
+    r13.setW(400);
+    r13.setFillColor(80,200,20);
+    r13.setfloor(false);
+    
+    r14 = new Rectangle();
+    r14.setX(300);
+    r14.setY(150);
+    r14.setH(48);
+    r14.setW(400);
+    r14.setFillColor(80,200,20);
+    r14.setfloor(false);
+    
+    // Donje platforme u levelima(iste su za sve)
     floor = new Rectangle();
     floor.setX(0);
     floor.setY(600);
@@ -256,12 +305,35 @@
     floor4.setW(1000);
     floor4.setH(48);
     floor4.setfloor(true);
+    
+    floor5 = new Rectangle();
+    floor5.setX(0);
+    floor5.setY(600);
+    floor5.setW(1000);
+    floor5.setH(48);
+    floor5.setFillColor(80,200,20);
+    floor5.setfloor(true);
+    
+    floor6 = new Rectangle();
+    floor6.setX(0);
+    floor6.setY(600);
+    floor6.setW(1000);
+    floor6.setH(48);
+    floor6.setFillColor(80,200,20);
+    floor6.setfloor(true);
  
     //..............inicijalizacija lista podloga................ 
   
     ArrayList<Rectangle> p = new ArrayList<Rectangle>();
     p.add(floor);
     p.add(r1);
+    
+    /*ArrayList<Rectangle> p = new ArrayList<Rectangle>();
+    p.add(floor5);
+    p.add(r11);
+    p.add(r12);
+    p.add(r13);
+    p.add(r14);*/
     
     ArrayList<Rectangle> platforms2 = new ArrayList<Rectangle>();
     platforms2.add(floor2);
@@ -280,6 +352,13 @@
     platforms4.add(r6);     
     platforms4.add(r7);
     platforms4.add(r8);
+    
+    ArrayList<Rectangle> platforms5 = new ArrayList<Rectangle>();
+    platforms5.add(floor5);
+    platforms5.add(r11);
+    platforms5.add(r12);
+    platforms5.add(r13);
+    platforms5.add(r14);
     
     //.....................inicijalizacija Kirlie......................
     
@@ -329,7 +408,18 @@
     k4.scale(100, 90);
     k4.setCurrentlyAbove(floor4);//postavljati prije ulaska u level
     
-   //.............inicijalizacija točaka u kojima će se pojavljivati novčić za level 1.......
+    k5 = new Kirlia();
+    k5.setOgX(400);
+    k5.setX(400);
+    k5.setOgY(578);
+    k5.setY(578);
+    k5.setHeigth(20);
+    k5.setWidth(20);
+    k5.setImage(tmpImg);
+    k5.scale(100, 90);
+    k5.setCurrentlyAbove(floor);//postavljati prije ulaska u level
+    
+   //.............inicijalizacija točaka u kojima će se pojavljivati novčići za level 1.......
     Point p1 = new Point(585, 585);
     Point p2 = new Point(220, 585);
     Point p3 = new Point(585, 420);
@@ -340,7 +430,7 @@
     coinsP.add(p2);
     coinsP.add(p3);
   
-    //....................inicijalizacija točaka u kojima će se pojavljivati novčić za level 2................
+    //....................inicijalizacija točaka u kojima će se pojavljivati novčići za level 2................
     Point p4 = new Point(730, 445);
     Point p5 = new Point(100, 307);
     
@@ -350,7 +440,7 @@
     coinsP2.add(p4);
     coinsP2.add(p5);
     
-    //.............inicijalizacija točaka u kojima će se pojavljivati novčić za level 3.......
+    //.............inicijalizacija točaka u kojima će se pojavljivati novčići za level 3.......
     Point p6 = new Point(50, 585);
     Point p7 = new Point(400, 50);
     Point p8 = new Point(580, 50);
@@ -364,7 +454,7 @@
     coinsP3.add(p6);
     coinsP3.add(p8);
     
-    //.............inicijalizacija točaka u kojima će se pojavljivati novčić za level 4.......
+    //.............inicijalizacija točaka u kojima će se pojavljivati novčići za level 4.......
     
     Point p9 = new Point(930,520);
     Point p10 = new Point(750,400);
@@ -376,9 +466,24 @@
     coinsP4.add(p10);
     coinsP4.add(p11);
     coinsP4.add(p12);
+    
+    //.............inicijalizacija točaka u kojima će se pojavljivati novčići za level 5.......
+    
+    Point p13 = new Point(350,410);
+    Point p14 = new Point(50,280);
+    Point p15 = new Point(800,280);
+    Point p16 = new Point(500,120);
+    Point p17 = new Point(750,570);
+    
+    ArrayList<Point> coinsP5 = new ArrayList<Point>();
+    coinsP5.add(p13);
+    coinsP5.add(p14);
+    coinsP5.add(p15);
+    coinsP5.add(p16);
+    coinsP5.add(p17);
    
     //.........................inicijalizacija objekata klase enemy.............
-    
+    // Neprijatelji drugopg levela
     tmpImg = loadImage("e1.png");
     
     e = new Enemy();
@@ -395,6 +500,8 @@
     e.isboss(false);
     
     ArrayList<Enemy> enemylist1 = new ArrayList<Enemy>();
+    
+    // Neprijatelji trećeg levela
     ArrayList<Enemy> enemylist2 = new ArrayList<Enemy>();
     
     e1 = new Enemy();
@@ -428,6 +535,7 @@
     enemylist2.add(e1);
     enemylist2.add(e2);
     
+    // Neprijatelji četvrtog levela
     PImage tmpimg2 = loadImage("e1.png");
     
     e3= new Enemy();
@@ -445,12 +553,75 @@
     
     ArrayList<Enemy> enemylist3 = new ArrayList<Enemy>();
     enemylist3.add(e3);
+    
+    // Neprijatelji petog levela
+    ArrayList<Enemy> enemylist4 = new ArrayList<Enemy>();
+    
+    e4 = new Enemy();
+    e4.setX(60);
+    e4.setY(200);
+    e4.setOgX(60);
+    e4.setOgY(200);
+    e4.setHeigth(50);
+    e4.setWidth(30);
+    e4.setDistance(150);
+    e4.setImage(tmpImg);
+    e4.scale(250,150);
+    e4.health(1);
+    e4.isboss(false);
+    
+    e5 = new Enemy();
+    e5.setX(350);
+    e5.setY(60);
+    e5.setOgX(350);
+    e5.setOgY(60);
+    e5.setHeigth(50);
+    e5.setWidth(30);
+    e5.setDistance(100);
+    e5.setImage(tmpImg);
+    e5.scale(250,150);
+    e5.health(1);
+    e5.isboss(false);
+    
+    e6 = new Enemy();
+    e6.setX(650);
+    e6.setY(200);
+    e6.setOgX(650);
+    e6.setOgY(200);
+    e6.setHeigth(50);
+    e6.setWidth(30);
+    e6.setDistance(150);
+    e6.setImage(tmpImg);
+    e6.scale(250,150);
+    e6.health(1);
+    e6.isboss(false);
+    
+    // Moramo ih dodati sada inace ce svi biti tipa boss
+    enemylist4.add(e4);
+    enemylist4.add(e5);
+    enemylist4.add(e6);
+    
+    e7= new Enemy();
+    e7.setX(550);
+    e7.setY(450);
+    e7.setOgX(550);
+    e7.setOgY(450);
+    e7.setHeigth(200);
+    e7.setWidth(150);
+    e7.setDistance(100);
+    e7.setImage(tmpimg2);
+    e7.scale(350,250);
+    e7.health(3);
+    e7.isboss(true);
+    
+    enemylist4.add(e7);
    
    //...........................inicijalizacija objekta klase level...........
     l = new Level(3, k1, null, coinsP, p, nova, coin_sound, enemy_sound);
-    l2 = new Level(5, k2, enemylist1, coinsP2, platforms2, nova, coin_sound, enemy_sound);
-    l3 = new Level(6, k3, enemylist2, coinsP3, platforms3, treci, coin_sound, enemy_sound);
-    l4 = new Level(4, k4, enemylist3, coinsP4, platforms4, treci, coin_sound, enemy_sound);
+    l2 = new Level(5, k1, enemylist1, coinsP2, platforms2, nova, coin_sound, enemy_sound);
+    l3 = new Level(6, k1, enemylist2, coinsP3, platforms3, treci, coin_sound, enemy_sound);
+    l4 = new Level(4, k1, enemylist3, coinsP4, platforms4, treci, coin_sound, enemy_sound);
+    l5 = new Level(5, k1, enemylist4, coinsP5, platforms5, peti, coin_sound, enemy_sound);
     
     
     //.........................inicijalizacija liste levela................
@@ -460,6 +631,7 @@
     allLevels.add(l2);
     allLevels.add(l3);
     allLevels.add(l4);
+    allLevels.add(l5);
     }
   
   //Funkcija koja crta trenutni ekran.
@@ -481,6 +653,9 @@
             }
             else if(currentLevel == 3){
               flag = l4.draw(); 
+            }
+            else if(currentLevel == 4){
+              flag = l5.draw(); 
             }
       
         }else if (flag == 0) {//crta meni (gumbi su invisible ako ih eksplicitno ne crtamo)
@@ -506,6 +681,8 @@
               k3.pucanjleft=false;
               k4.pucanjright=false;
               k4.pucanjleft=false;
+              k5.pucanjright=false;
+              k5.pucanjleft=false;
               }
           
         }else if(flag == 3){

@@ -21,6 +21,7 @@
              l2.resetlevel(1);
              l3.resetlevel(2);
              l4.resetlevel(3);
+             l5.resetlevel(4);
              currentLevel=0;
            }
   }
@@ -33,6 +34,7 @@
       l2.resetlevel(1);
       l3.resetlevel(2);
       l4.resetlevel(3);
+      l5.resetlevel(4);
       currentLevel=0;
     }
     if((flag==3 || flag==4) & keyCode==ENTER){
@@ -41,6 +43,8 @@
       l2.resetlevel(1);
       l3.resetlevel(2);
       l4.resetlevel(4);
+      l5.resetlevel(4);
+      
       currentLevel=0;
     }
     l.keyPressed();

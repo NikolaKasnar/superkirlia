@@ -373,7 +373,7 @@ class Level{
       kirlia.setHealth(5);
       kirlia.setPoints(0);
       collectedCoins=0;
-      if(level<2){
+      if(level<2 || level>3){
         kirlia.setY(578);
         kirlia.setX(400);
       }
