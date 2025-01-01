@@ -100,9 +100,11 @@
     drugi = new PImage();
     drugi = loadImage("drugi.jpeg");*/
     
+    // Pozadina za prvi i drugi level
     nova = new PImage();
     nova = loadImage("nova.jpg");
     
+    // Pozadina za treci i cetvrti level
     treci = new PImage();
     treci = loadImage("treci.jpg");
     
