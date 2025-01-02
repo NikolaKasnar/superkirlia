@@ -375,60 +375,18 @@
     k1.scale(100, 90);
     k1.setCurrentlyAbove(floor);//postavljati prije ulaska u level
     
-    k2 = new Kirlia();
-    k2.setOgX(400);//POTREBNO ISTO POSTAVITI NA POCETKU
-    k2.setX(400);
-    k2.setOgY(578);//POTREBNO ISTO POSTAVITI NA POCETKU
-    k2.setY(578);
-    k2.setHeigth(20);
-    k2.setWidth(20);
-    k2.setImage(tmpImg);
-    k2.scale(100, 90);
-    k2.setCurrentlyAbove(floor2);//postavljati prije ulaska u level 
-    
-    k3 = new Kirlia();
-    k3.setOgX(400);
-    k3.setX(400);
-    k3.setOgY(578);
-    k3.setY(578);
-    k3.setHeigth(20);
-    k3.setWidth(20);
-    k3.setImage(tmpImg);
-    k3.scale(100, 90);
-    k3.setCurrentlyAbove(floor3);//postavljati prije ulaska u level
-    
-    k4 = new Kirlia();
-    k4.setOgX(400);
-    k4.setX(400);
-    k4.setOgY(678);
-    k4.setY(678);
-    k4.setHeigth(20);
-    k4.setWidth(20);
-    k4.setImage(tmpImg);
-    k4.scale(100, 90);
-    k4.setCurrentlyAbove(floor4);//postavljati prije ulaska u level
-    
-    k5 = new Kirlia();
-    k5.setOgX(400);
-    k5.setX(400);
-    k5.setOgY(578);
-    k5.setY(578);
-    k5.setHeigth(20);
-    k5.setWidth(20);
-    k5.setImage(tmpImg);
-    k5.scale(100, 90);
-    k5.setCurrentlyAbove(floor);//postavljati prije ulaska u level
-    
    //.............inicijalizacija točaka u kojima će se pojavljivati novčići za level 1.......
     Point p1 = new Point(585, 585);
     Point p2 = new Point(220, 585);
     Point p3 = new Point(585, 420);
+    Point pBonus = new Point(585, 585);
    
     ArrayList<Point> coinsP = new ArrayList<Point>();
     
     coinsP.add(p1);
     coinsP.add(p2);
     coinsP.add(p3);
+    coinsP.add(pBonus);
   
     //....................inicijalizacija točaka u kojima će se pojavljivati novčići za level 2................
     Point p4 = new Point(730, 445);
@@ -617,7 +575,7 @@
     enemylist4.add(e7);
    
    //...........................inicijalizacija objekta klase level...........
-    l = new Level(3, k1, null, coinsP, p, nova, coin_sound, enemy_sound);
+    l = new Level(4, k1, null, coinsP, p, nova, coin_sound, enemy_sound);
     l2 = new Level(5, k1, enemylist1, coinsP2, platforms2, nova, coin_sound, enemy_sound);
     l3 = new Level(6, k1, enemylist2, coinsP3, platforms3, treci, coin_sound, enemy_sound);
     l4 = new Level(4, k1, enemylist3, coinsP4, platforms4, treci, coin_sound, enemy_sound);
@@ -675,14 +633,6 @@
               //kontrola za pucanje
               k1.pucanjright=false;
               k1.pucanjleft=false;
-              k2.pucanjright=false;
-              k2.pucanjleft=false;
-              k3.pucanjright=false;
-              k3.pucanjleft=false;
-              k4.pucanjright=false;
-              k4.pucanjleft=false;
-              k5.pucanjright=false;
-              k5.pucanjleft=false;
               }
           
         }else if(flag == 3){
