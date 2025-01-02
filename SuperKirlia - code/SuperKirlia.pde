@@ -150,6 +150,7 @@
     
     //.......................load i pokretanje pozadinske glazba................. 
     background_music= new SoundFile(this, "background_music.mp3");
+    boss_music= new SoundFile(this, "boss_music.mp3");
     background_music.rate(0.8);
     background_music.loop();
     

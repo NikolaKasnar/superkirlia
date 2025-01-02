@@ -75,6 +75,23 @@ class Level{
   //Funkcija koja je zaduzena za crtanje svega na ekran
   int draw(){
        update();
+       
+       // Manage background and boss music based on current_level
+      if (currentLevel == 5) { // Boss level
+          if (!boss_music.isPlaying()) {
+              if (!mute) {
+                  background_music.stop();
+                  boss_music.play();
+              }
+          }
+      } else {
+          if (!background_music.isPlaying()) {
+              if (!mute) {
+                  boss_music.stop();
+                  background_music.loop(); // Loop background music
+              }
+          }
+      }
     
       //u slučaju gubitka (health=0) ili pobjede (maxpoints=0) ili neispunjenja ijednog uvjeta (nastavak igre), funkcija vraća različite vrijednosti
         if(kirlia.getHealth() == 0){
