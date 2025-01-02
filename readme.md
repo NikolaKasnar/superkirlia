@@ -5,13 +5,13 @@ Popis napravljenih poboljšanja projekta:\
 •	Dodano prenošenje Kirlie iz jednog u drugi level pri čemu se sačuva trenutno zdravlje i rezultat Kirlije što omogučuje pamćenje do sada dobivenog rezultata\
 •	Dodan ispis konačnog rezultata u slučaju gubitka i pobjede\
 •	Promijenjen način bodovanja pri čemu se nagrađuje igrača koji sačuva više healtha te ubija neprijatelje:\
-      -	+10 bodova – sakupljanje novčića\
-      -	+5 bodova – ubijanje običnog neprijatelja\
-      -	+15 bodova – ubijanje boss neprijatelja\
-      -	+10*health – za svaki sačuvani health igrač dobiva 10 bodova na kraju igre\
+            -	+10 bodova – sakupljanje novčića\
+            -	+5 bodova – ubijanje običnog neprijatelja\
+            -	+15 bodova – ubijanje boss neprijatelja\
+            -	+10*health – za svaki sačuvani health igrač dobiva 10 bodova na kraju igre\
 •	Dodan kostur za buduću implementaciju health pickupa(novčića) koji kada se skupe povećaju health Kirlije za jedan uključujući i pripadnu sliku te zvuk sakupljanja\
 •	Dodana oznaka levela na ekranu\
-•	Imena varijabli prepravljeni da budu konzistentni\
+•	Imena varijabli prepravljeni da budu konzistentni
 
 
 Daljnja moguća poboljšanja:\
@@ -25,5 +25,5 @@ Daljnja moguća poboljšanja:\
 •	Dodavanje različitih vrsta novčića ili neprijatelja\
 •	Biranje težine igre na početku (npr. smanjen health za Kirliju pri „hard mode“ i sl.)\
 •	Dodavanje multiplayer opcije\
-•	Dodavanja ekrana postavki gdje igrač može upravljatiu različitim jačinama zvukova(zvuk pozadinske glazbe, zvuk neprijatelja...)\
+•	Dodavanja ekrana postavki gdje igrač može upravljatiu različitim jačinama zvukova(zvuk pozadinske glazbe, zvuk neprijatelja...)
 
