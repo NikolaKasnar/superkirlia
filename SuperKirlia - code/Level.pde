@@ -199,14 +199,18 @@ class Level{
                     
                     
                     
-                   //ispis bodova i zdravlja ako je potrebno
-                     int health = kirlia.getHealth();
-                     int points = kirlia.getPoints();
-                     stroke(#8B0000);
-                     fill(#8B0000);
-                     textSize(30);
-                     text(health, 155, 35);
-                     text(points, 155, 70);
+                   //ispis bodova, zdravlja i levela 
+                   int health = kirlia.getHealth();
+                   int points = kirlia.getPoints();
+                   // Brojevi levela krecu od nule
+                   int level = currentLevel+1;
+                   stroke(#8B0000);
+                   fill(#8B0000);
+                   textSize(30);
+                   text(health, 155, 35);
+                   text(points, 155, 70);
+                   textSize(50);
+                   text("Level "+ level, 450, 70);
       
                     return 1;//nastavak igre
                     } 
