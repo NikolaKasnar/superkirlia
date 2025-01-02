@@ -23,8 +23,14 @@ class Level{
   Coin coin;
   //Sve pozicije novcica; moze ih biti limitirano malo, barem 2 vise zbog neke logike
   ArrayList<Point> positionOfCoins;
+  //Health u levelu
+  Health health;
+  //Sve pozicije novcica; moze ih biti limitirano malo, barem 2 vise zbog neke logike
+  ArrayList<Point> positionOfHealth;
   //Indeks trenutnog novcica
   int currentCoin;
+  //Indeks trenutnog novcica
+  int currentHealth;
   //broj skupljenih novcica
   int collectedCoins;
   //Maksimalan broj novcica koji se mogu skupiti u trenutnom levelu
@@ -42,20 +48,22 @@ class Level{
   //---------------------metode klase----------------------
   //Konstruktor
   Level(int numberMaxPoints, Kirlia k, ArrayList<Enemy> enemy, 
-    ArrayList<Point> coins, ArrayList<Rectangle> rectangle, PImage img, SoundFile cs, SoundFile es){
+    ArrayList<Point> coins, ArrayList<Point> healths, ArrayList<Rectangle> rectangle, PImage img, SoundFile cs, SoundFile es){
   
-    setupL(numberMaxPoints, k, enemy, coins, rectangle, img, cs, es);
+    setupL(numberMaxPoints, k, enemy, coins, healths, rectangle, img, cs, es);
     }
     
   //Funkcija koja sve na pocetku levela (u trenutku njegovog stvaranja) inicijalizira
-  void setupL(int numberMaxPoints, Kirlia k, ArrayList<Enemy> enemy, ArrayList<Point> coins, ArrayList<Rectangle> rectangle, PImage img, SoundFile cs, SoundFile es){
+  void setupL(int numberMaxPoints, Kirlia k, ArrayList<Enemy> enemy, ArrayList<Point> coins, ArrayList<Point> healths, ArrayList<Rectangle> rectangle, PImage img, SoundFile cs, SoundFile es){
      //inicijalizacija podataka klase
       kirlia = k;
       maxPoints = numberMaxPoints;
       e = enemy;
       positionOfCoins = coins;
+      positionOfHealth = healths;
       platforms = rectangle;
       currentCoin = 0;
+      currentHealth = 0;
       collectedCoins=0;
       bg = img;
       enemy_sound=es;
@@ -65,6 +73,11 @@ class Level{
       coin = new Coin();
       coin.setCenter(positionOfCoins.get(currentCoin));
       coin.setRadius(30);
+      
+      //postavlja health na prvu poziciju
+      /*health = new Health();
+      health.setCenter(positionOfHealth.get(currentHealth));
+      health.setRadius(30);*/
       
       //dodatno za alternativnu implementaciju, prvotna platforma je 0 ("pod")
       kirlia.setCurrentlyAbove(platforms.get(0));
@@ -108,6 +121,9 @@ class Level{
                    
                    //crta novcic
                    coin.draw();
+                   
+                   //crta health
+                   //health.draw();
     
                   //crta platforme
                    for(int i = 0; i < platforms.size(); i++){  platforms.get(i).draw(); }

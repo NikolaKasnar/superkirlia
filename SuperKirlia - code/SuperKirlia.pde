@@ -30,6 +30,7 @@
   SoundFile winsound;
   SoundFile losesound;
   SoundFile pewsound;
+  SoundFile health_pickup;
   
   //pomocne varijable
   boolean mute=false;
@@ -161,6 +162,7 @@
     winsound=new SoundFile(this, "win.wav");
     losesound=new SoundFile(this, "lost.wav");
     pewsound=new SoundFile(this, "pew.mp3");
+    health_pickup=new SoundFile(this, "health_pickup.wav");
     
     //.......................inicijalizacija objekata gumba za menu...................
   
@@ -496,6 +498,17 @@
     coinsP6.add(p19);
     coinsP6.add(p20);
     coinsP6.add(p21);
+    
+    //.............inicijalizacija točaka u kojima će se pojavljivati health za level 6.......
+    
+    Point h1 = new Point(500,250);
+    Point h2 = new Point(500,670);
+    Point h3 = new Point(500,520);
+    
+    ArrayList<Point> healthH6 = new ArrayList<Point>();
+    healthH6.add(h1);
+    healthH6.add(h2);
+    healthH6.add(h3);
    
     //.........................inicijalizacija objekata klase enemy.............
     // Neprijatelji drugopg levela
@@ -651,12 +664,12 @@
     enemylist6.add(e8);
    
    //...........................inicijalizacija objekta klase level...........
-    l = new Level(4, k1, null, coinsP, p, nova, coin_sound, enemy_sound);
-    l2 = new Level(5, k1, enemylist1, coinsP2, platforms2, nova, coin_sound, enemy_sound);
-    l3 = new Level(6, k1, enemylist2, coinsP3, platforms3, treci, coin_sound, enemy_sound);
-    l4 = new Level(4, k1, enemylist3, coinsP4, platforms4, treci, coin_sound, enemy_sound);
-    l5 = new Level(5, k1, enemylist4, coinsP5, platforms5, peti, coin_sound, enemy_sound);
-    l6 = new Level(4, k1, enemylist6, coinsP6, platforms6, sesti, coin_sound, enemy_sound);
+    l = new Level(4, k1, null, coinsP, null, p, nova, coin_sound, enemy_sound);
+    l2 = new Level(5, k1, enemylist1, coinsP2, null, platforms2, nova, coin_sound, enemy_sound);
+    l3 = new Level(6, k1, enemylist2, coinsP3, null, platforms3, treci, coin_sound, enemy_sound);
+    l4 = new Level(4, k1, enemylist3, coinsP4, null, platforms4, treci, coin_sound, enemy_sound);
+    l5 = new Level(5, k1, enemylist4, coinsP5, null, platforms5, peti, coin_sound, enemy_sound);
+    l6 = new Level(4, k1, enemylist6, coinsP6, healthH6, platforms6, sesti, coin_sound, enemy_sound);
     
     
     //.........................inicijalizacija liste levela................
