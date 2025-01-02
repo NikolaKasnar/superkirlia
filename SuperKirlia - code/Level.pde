@@ -281,7 +281,11 @@ class Level{
             e.get(i).health--;
             if (e.get(i).health==0){
               e.get(i).explode=true;
-              kirlia.incrementPointEnemy1();
+              if(e.get(i).boss == true){
+                kirlia.incrementPointBoss1();
+              } else{
+                kirlia.incrementPointEnemy1();
+              }
             }
             else{
               if(!mute) enemy_sound.play();
@@ -300,7 +304,11 @@ class Level{
             e.get(i).health--;
             if (e.get(i).health==0){
               e.get(i).explode=true;
-              kirlia.incrementPointEnemy1();
+              if(e.get(i).boss == true){
+                kirlia.incrementPointBoss1();
+              } else{
+                kirlia.incrementPointEnemy1();
+              }
             }
             else{
               if(!mute) enemy_sound.play();
