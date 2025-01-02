@@ -1,48 +1,48 @@
-//Abstraktna klasa koja predstavlja gumb. Ova klasa je abstraktna
-//da se može uvijek napraviti gumb koji radi određene stvari, da se
-//uvijek te akcije mogu modificirati, a ne da postoji samo jedna akcija koja
+// Abstraktna klasa koja predstavlja gumb. Ova klasa je abstraktna
+// da se moze uvijek napraviti gumb koji radi odredene stvari, da se
+// uvijek te akcije mogu modificirati, a ne da postoji samo jedna akcija koja
 // je moguća
 abstract class AbstractButton{
-  //------------------podaci klase----------------
-  //X koordinata gumba
+  //------------------Podaci klase----------------
+  // X koordinata gumba
   int x;
-  //Y koordinata gumba
+  // Y koordinata gumba
   int y;
-  //Širina gumba
+  // Sirina gumba
   int width;
-  //Visina gumba
+  // Visina gumba
   int height;
-  //Boja unutrašnjosti gumba
+  // Boja unutrasnjosti gumba
   int fillColor;
-  //Boja ruba gumba
+  // Boja ruba gumba
   int borderColor;
-  //Tekst koji je upisan u gumb
+  // Tekst koji je upisan u gumb
   String text;
-  //Ime gumba
+  // Ime gumba
   String name;
   
-  //----------------------------metode klase----------------------
+  //----------------------------Metode klase----------------------
 
-  //Funkcija koja crta gumb
+  // Funkcija koja crta gumb
   void draw(){
     stroke(borderColor);
     fill(fillColor);
     rect(x, y, width, height);
     }
     
-  //Funkcija koja se poziva pri pritisku gumba
+  // Funkcija koja se poziva pri pritisku gumba
   void mousePressed(){
     update(mouseX, mouseY);
     }
     
-  //Funkcija koja provjerava da li je miš u trenutku klika iznad gumba, i ako jest, onda se obavlja neka funkcija doFunction()
+  // Funkcija koja provjerava da li je mis u trenutku klika iznad gumba, i ako jest, onda se obavlja neka funkcija doFunction()
   void update(int X, int Y){
     if(overRect()){
       doFunction();
       }
     }
   
-  //Funkcija provjerava da li je miš iznad gumba
+  // Funkcija provjerava da li je mis iznad gumba
   boolean overRect()  {
     if (mouseX >= x && mouseX <= x+width && 
         mouseY >= y && mouseY <= y+height) {
@@ -52,33 +52,33 @@ abstract class AbstractButton{
       }
     }
     
-  //Abstraktna funkcija koja označava funkciju koja će se obaviti 
+  // Abstraktna funkcija koja oznacava funkciju koja ce se obaviti 
   abstract void doFunction();
   
-  //...........................set funkcije.................................
+  //...........................Set funkcije.................................
   
-    //Postavlja x koordinatu
+  // Postavlja x koordinatu
   void setX(int X){   x = X;  }
   
-  //Postavlja y koordinatu
+  // Postavlja y koordinatu
   void setY(int Y){  y = Y; }
   
-  //Postavlja širinu gumba
+  // Postavlja sirinu gumba
   void setWidth(int w){  width = w;  }
   
-  //Postavlja visinu gumba
+  // Postavlja visinu gumba
   void setHeight(int h){ height = h;}
   
-  //Postavlja ime gumba
+  // Postavlja ime gumba
   void setName(String n){  name = n; }
   
-  //Postavlja tekst gumba
+  // Postavlja tekst gumba
   void setText(String t){ text = t;}
   
-  //Postavlja boju unutrašnjosti gumba
+  // Postavlja boju unutrašnjosti gumba
   void setFillColor(int fC){  fillColor = fC; }
   
-  //Postavlja boju ruba gumba
+  // Postavlja boju ruba gumba
   void setBorderColor(int bC){   borderColor = bC;  }
   
 }

@@ -1,89 +1,88 @@
-//Klasa koja predstavlja glavni lik imena Kirlia.
-//Ima dodatne funkcije za kretanje, primanje bodova, primanje damagea, i 
-//provjeru da li je iznad neke platforme(te funkcije služe za pomoć skakanju i kretanju)
+// Klasa koja predstavlja glavni lik imena Kirlia.
+// Ima dodatne funkcije za kretanje, primanje bodova, primanje damagea, i 
+// provjeru da li je iznad neke platforme(te funkcije sluze za pomoć skakanju i kretanju)
 class Kirlia extends Character{
-  //------------------------podaci klase--------------------
+  //------------------------Podaci klase--------------------
   
-  //slika lika igrača
+  // Slika lika igrača
   PImage imgKirlia;
-  //Varijabla koja govori koliko bodova ima K
+  // Varijabla koja govori koliko bodova ima K
   int points = 0;
-  //Broj koji označava broj života od K
+  // Broj koji oznacava broj zivota od K
   int health = 5;
   
-  //kontrola za pucanje
+  // Kontrola za pucanje
   int putanja = 0;
   int px;
   int py;
   
-  //.................state-flags......................
-  //Govori da li je K u stanju kretanja lijevo
+  //.................State-flags......................
+  // Govori da li je K u stanju kretanja lijevo
   boolean moveLeft = false;
-  //Govori da li je K u stanju kretanja udesnso
+  // Govori da li je K u stanju kretanja udesnso
   boolean moveRight = false;
-  //Govori da li je K u stanju skakanja
+  // Govori da li je K u stanju skakanja
   boolean jump = false;
-  //Govori da li je K u stanju padanja
+  // Govori da li je K u stanju padanja
   boolean fall = false;
-  //je li se dogodio pucanj
+  // Je li se dogodio pucanj
   boolean pucanjright = false;
   boolean pucanjleft = false;
   
-  //...................kontrola-skoka................
-  //Originalna koordinata X; pomaže kod skakanja, za kontrolu da se ne skače unedogled
+  //...................Kontrola-skoka................
+  // Originalna koordinata X; pomaze kod skakanja, za kontrolu da se ne skace unedogled
   int ogX;
-  //Originalna koordinata Y; pomaže kod skakanja, za kontrolu da se ne skače unedogled
+  // Originalna koordinata Y; pomaze kod skakanja, za kontrolu da se ne skace unedogled
   int ogY;
   
-  //.................kontrola-pada.................
-  //Pomoćna varijabla za provjeravanje u kojem je trenutku Kirlia počela padati.
-  //ne koristi se u ovoj verziji; ali je ostavljena jer se s njom optimizira 
-  //računanje iznad koje je platforme K; taj princip nije bulletproof
+  //.................Kontrola-pada.................
+  // Pomocna varijabla za provjeravanje u kojem je trenutku Kirlia počela padati.
+  // ne koristi se u ovoj verziji; ali je ostavljena jer se s njom optimizira 
+  // racunanje iznad koje je platforme K; taj princip nije bulletproof
   int fallTime = 0;
-  //Varijabla koja govori iznad koje je trenutno platforme K
+  // Varijabla koja govori iznad koje je trenutno platforme K
   Rectangle currentlyAbove;
-  //COUNTERI NEPOTREBNI
-  //PADA DO DONJE GRANICE, NAPISANA FUNKCIJA
-  //ostavljeno jer bi se možda padanje moglo unaprijediti s tim
+  // COUNTERI NEPOTREBNI
+  // PADA DO DONJE GRANICE, NAPISANA FUNKCIJA
+  // ostavljeno jer bi se mozda padanje moglo unaprijediti s tim
   int fallCounter = 0;
   
-  //-----------------metode klase--------------
+  //-----------------Metode klase--------------
   
-  
-  //funkcija koja obrađuje reakciju objekta na otpuštanje tipke na tipkovnici
+  // Funkcija koja obrađuje reakciju objekta na otpustanje tipke na tipkovnici
   void keyReleased(){
  
-    //kada pustimo "a"/"left" da kirlia prestane ići lijevo
+    // Kada pustimo "a"/"left" da kirlia prestane ici lijevo
     if(keyCode == LEFT || keyCode == 'A'){
       moveLeft = false;
     }
     
-    //kada pustimo "d"/"right" da kirlia prestane ići desno
+    // Kada pustimo "d"/"right" da kirlia prestane ici desno
     if(keyCode == RIGHT || keyCode == 'D'){
       moveRight = false;
     }
     
-    //kada pustimo "W"/"up" da kirlia prestane skakati --->NAPOMENA: prestanak skoka je početak pada, dok ne dodirne platformu
+    // Kada pustimo "W"/"up" da kirlia prestane skakati --->NAPOMENA: prestanak skoka je pocetak pada, dok ne dodirne platformu
     if(keyCode == UP || keyCode == 'W'){
       jump = false;
       fall = true;
     }
   }
   
-  //funkcija koja obrađuje reakciju objekta na pritisak tipke na tipkovnici
+  // Funkcija koja obraduje reakciju objekta na pritisak tipke na tipkovnici
   void keyPressed(){
     
-    //kada pritisnemo "a"/"left" da kirlia ide lijevo
+    // Kada pritisnemo "a"/"left" da kirlia ide lijevo
     if(keyCode == LEFT || keyCode == 'A'){
       moveLeft = true;
     }
     
-    //kada pritisnemo "d"/"right" da kirlia ide desno
+    // Kada pritisnemo "d"/"right" da kirlia ide desno
     if(keyCode == RIGHT || keyCode == 'D'){
       moveRight = true;
     }
     
-    //kada pritisnemo "W"/"up" da kirlia skoči --> NAPOMENA: kada je u stanju pada, ne može skakati, nego tek to može kad dodirne platformu
+    // Kada pritisnemo "W"/"up" da kirlia skoci --> NAPOMENA: kada je u stanju pada, ne moce skakati, nego tek to može kad dodirne platformu
     if((keyCode == UP || keyCode == 'W') && fall == false){
       ogX = x;
       ogY = y;
@@ -101,39 +100,37 @@ class Kirlia extends Character{
      }
     }
   
-  //Funkcija koja updatea gdje se nalazi K. Kreće se gore, dolje, lijevo, ili desno, ovisno o postavljenim zastavicama
+  // Funkcija koja updatea gdje se nalazi K. Krece se gore, dolje, lijevo, ili desno, ovisno o postavljenim zastavicama
   void update(){
     
-     //ako se pomakne lijevo ili desno
+    // Ako se pomakne lijevo ili desno
     if(moveLeft) moveLeft(); 
     if(moveRight) moveRight();
     
-    //ako je zastavica za jump dignuta
+    // Ako je zastavica za jump dignuta
     if(jump && y>10) y -= 7;
     
-    //ako je zastavica za fall dignuta
+    // Ako je zastavica za fall dignuta
     if(fall){ 
       y += 4;                  
     }         
   }
   
-  //Funkcija crta K
+  // Funkcija crta K
   void draw(){
-    //Prvo se položaj updatea
+    // Prvo se polozaj updatea
     update();    
-    //zatim se nacrta slika
-    image(imgKirlia, x - 34, y - 65);
-    
-    
-    }
+    // Zatim se nacrta slika
+    image(imgKirlia, x - 34, y - 65);        
+  }
   
-  //Funckija gleda da li je lik iznad neke platforme(class rectangle) R. Bitno da je barem jedan kut lika iznad platforme. 
+  // Funckija gleda da li je lik iznad neke platforme(class rectangle) R. Bitno da je barem jedan kut lika iznad platforme. 
   boolean isAbove(Rectangle R){ 
-    //vraća gornji desni i lijevi kut rektangla R
+    // Vraca gornji desni i lijevi kut rektangla R
     Point A = R.returnLUPoint();
     Point B = R.returnRUPoint();
     
-    //uspoređujemo ih sa koordinatama kirlie
+    // Usporedujemo ih sa koordinatama kirlie
      if( y < A.getY() && ((x > A.getX() || (x + width) > A.getX())) && x < B.getX()){
         return true;
       }else{
@@ -141,7 +138,7 @@ class Kirlia extends Character{
       }
     }
   
-  //Funkcija vraća koliko je lik udaljen od platforme ispod nje. Ako poslana platforma nije ispod K, onda se vraća -1
+  // Funkcija vraca koliko je lik udaljen od platforme ispod nje. Ako poslana platforma nije ispod K, onda se vraca -1
   int howMuchAbove(Rectangle r){
     if(isAbove(r)){
         return Math.abs(y - r.returnLUPoint().getY());
@@ -150,114 +147,118 @@ class Kirlia extends Character{
       }
     }
     
-  //Mijenja velicinu slike
+  // Mijenja velicinu slike
   void scale(int numberH, int numberW){ imgKirlia.resize(numberW, numberH); }
     
-  //..................inkrement&dekrement funkcije......................
+  //..................Inkrement&dekrement funkcije......................
     
-  //Kretanje udesno
+  // Kretanje udesno
   void moveRight(){ if (x<=990) x += 6; }
   
-  //Kretanje ulijevo
+  // Kretanje ulijevo
   void moveLeft(){ if (x>=6) x -= 6; }
   
-  //Funckija inkrementira broj bodova za 10 pri skupljanju novcica
+  // Funckija inkrementira broj bodova za 10 pri skupljanju novcica
   void incrementPoint(){ points += 10; }
   
-  //Funckija inkrementira broj bodova za 5 pri ubijanju neprijatelja prvog tipa
+  // Funckija inkrementira broj bodova za 5 pri ubijanju neprijatelja prvog tipa
   void incrementPointEnemy1(){ points += 5; }
   
-  //Funckija inkrementira broj bodova za 15 pri ubijanju bossa prvog tipa
+  // Funckija inkrementira broj bodova za 15 pri ubijanju bossa prvog tipa
   void incrementPointBoss1(){ points += 15; }
   
-  //Funckija koja inkrementira broj bodova za zadani broj
+  // Funckija koja inkrementira broj bodova za zadani broj
   void incrementPoint(int number){ points += number; }
   
-    //Makni jedan život
+  // Makni jedan život
   void removeHealth(){ health -= 1; }
   
-  //Makni određen broj života
+  // Dodaj jedan život
+  void addHealth(){ health += 1; }
+  
+  // Makni odreden broj života
   void removeHealth(int number){  health -= number; }
+  
+  // Dodaj odreden broj života
+  void addHealth(int number){  health += number; }
  
-  //Inkrementira se fallTime za jedan
+  // Inkrementira se fallTime za jedan
   void incrementFallTime(){  fallTime++; }
   
-  //Inkrementira se fallTime za određeni poslani broj
+  // Inkrementira se fallTime za odredeni poslani broj
   void incrementFallTime(int t){  fallTime += t; }
     
-  //............................get funkcije............................
+  //............................Get funkcije............................
   
-  //Vraća broj bodova
+  // Vraca broj bodova
   int getPoints(){ return points; }
   
-   //Vraca sliku
+  // Vraca sliku
   PImage getImage(){ return imgKirlia; }
   
-    //Vraća se zastavica za skakanje
+  // Vraca se zastavica za skakanje
   boolean getJump(){ return jump; }
   
-  //Vraća se zastavica za pad
+  // Vraca se zastavica za pad
   boolean getFall(){ return fall; }
   
-  //Vraća centar K
+  // Vraca centar K
   Point getCenter(){ return new Point(x + width/2, y + height/2); }
   
-    //Vraća se originalni X
+  // Vraca se originalni X
   int getOgX(){ return ogX; }
   
-  //Vraća se originalni Y
+  // Vraca se originalni Y
   int getOgY(){ return ogY; }
   
-  //Vraća se X
+  // Vraca se X
   int getX(){ return x; }
   
-  //Vraća se Y
+  // Vraca se Y
   int getY(){ return y; }
   
-  //Vraća točku (x,y)
+  // Vraca tocku (x,y)
   Point getXY(){
     p= new Point(x,y);
     return p;
   }
   
-  //Vrati broj života
+  // Vrati broj zivota
   int getHealth(){ return health; }
   
-  //Vraća platformu iznad koje je trenutno K
+  // Vraca platformu iznad koje je trenutno K
   Rectangle getCurrentlyAbove(){ return currentlyAbove; }
   
-  //Vraća fallTime
+  // Vraca fallTime
   int getFallTime(){ return fallTime; }
   
   
-  //...........................set funkcije..............................
+  //...........................Set funkcije..............................
     
-  //Postavlja broj bodova
+  // Postavlja broj bodova
   void setPoints(int pointsK){ points = pointsK; }
     
-  //Postavlja sliku
+  // Postavlja sliku
   void setImage(PImage img){ imgKirlia = img; }
   
-  //Postavlja se zastavica za padanje
+  // Postavlja se zastavica za padanje
   void setFall(boolean flag){ fall = flag; }
   
-  //Postavlja se zastavica za skakanje
+  // Postavlja se zastavica za skakanje
   void setJump(boolean flag){ jump = flag; }
   
-  //Postavlja se originalni X
+  // Postavlja se originalni X
   void setOgX(int number){ ogX = number; }
   
-  //Postavlja se originalni Y
+  // Postavlja se originalni Y
   void setOgY(int number){ ogY = number; }
   
-  //Postavlja se trenutno nova platforma iznad koje je K
+  // Postavlja se trenutno nova platforma iznad koje je K
   void setCurrentlyAbove(Rectangle r){ currentlyAbove = r; }
   
-    //Postavlja se fallTime
+  // Postavlja se fallTime
   void setFallTime(int t){ fallTime = t; }
   
-    //Postavi broj života; originalno je 5
+  // Postavi broj života; originalno je 5
   void setHealth(int number){ health = number; }
- 
-
 }

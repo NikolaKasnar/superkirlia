@@ -1,23 +1,23 @@
-//Funkcija koja se poziva kad se pritisne tipka na misu
+// Funkcija koja se poziva kad se pritisne tipka na misu
  void mousePressed() {
    
   
-    if (flag == 0) { //ukoliko se nalazimo u meni-ju
+    if (flag == 0) { // Ukoliko se nalazimo u meni-ju
           menuButton.mousePressed();
           exitButton.mousePressed();
           
-          } else if (flag == 1) { //ukoliko smo na nekom levelu igre
-              l.mousePressed();
+          } else if (flag == 1) { // Ukoliko smo na nekom levelu igre
+              l1.mousePressed();
               pauseButton.mousePressed();
               
-          }else if( flag == 2){ //ukoliko smo između levela, program ne radi ništa
+          }else if( flag == 2){ // Ukoliko smo izmedu levela, program ne radi ništa
           
-           }else if(flag == 3 || flag == 4){ //ukoliko smo na pobjedničkom/gubitničkom ekranu
-              // klik nas vraća na meni
+           }else if(flag == 3 || flag == 4){ //Ukoliko smo na pobjednickom/gubitnickom ekranu
+              // Klik nas vraća na meni
               flag = 0;
           
-             //......reset levela tako da se omogući ponovno igranje....
-             l.resetlevel(0);
+             //......Reset levela tako da se omoguci ponovno igranje....
+             l1.resetlevel(0);
              l2.resetlevel(1);
              l3.resetlevel(2);
              l4.resetlevel(3);
@@ -27,11 +27,11 @@
            }
   }
   
-//Funkcija koja se poziva kad se pritisne tipka na tipkovnici
+// Funkcija koja se poziva kad se pritisne tipka na tipkovnici
  void keyPressed() {
     if(flag==0 & keyCode==ENTER){
       flag=1;
-      l.resetlevel(0);
+      l1.resetlevel(0);
       l2.resetlevel(1);
       l3.resetlevel(2);
       l4.resetlevel(3);
@@ -41,7 +41,7 @@
     }
     if((flag==3 || flag==4) & keyCode==ENTER){
       flag=0;
-      l.resetlevel(0);
+      l1.resetlevel(0);
       l2.resetlevel(1);
       l3.resetlevel(2);
       l4.resetlevel(4);
@@ -50,15 +50,15 @@
       
       currentLevel=0;
     }
-    l.keyPressed();
+    l1.keyPressed();
     l2.keyPressed();
     l3.keyPressed();
     l4.keyPressed();
      }
   
-//Funckija koja se zove kad se otpusti tipka na tipkovnici
+// Funckija koja se zove kad se otpusti tipka na tipkovnici
  void keyReleased() {
-    l.keyReleased();
+    l1.keyReleased();
     l2.keyReleased();
     l3.keyReleased();
     l4.keyReleased();

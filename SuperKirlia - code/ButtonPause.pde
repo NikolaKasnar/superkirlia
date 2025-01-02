@@ -1,4 +1,4 @@
-//Klasa za gumb za stisavanje zvuka
+// Klasa za gumb za stisavanje zvuka
   class ButtonPause extends AbstractButton {
     void doFunction() {
         if (mute) {

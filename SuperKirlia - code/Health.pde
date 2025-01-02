@@ -1,15 +1,15 @@
-//Klasa koja reprezentira health koji se moze sakupiti u igri
+// Klasa koja reprezentira health koji se moze sakupiti u igri
 class Health{
-  //------------------podaci klase----------------
-  //Centar healtha
+  //------------------Podaci klase----------------
+  // Centar healtha
   Point center;
-  //Radijus healtha
+  // Radijus healtha
   int radius;
-  //Slika healtha
+  // Slika healtha
   PImage imgHealth;
   
-  //-------------------metode klase----------------
-  //Konstruktor
+  //-------------------Metode klase----------------
+  // Konstruktor
   Health(Point p, int r){
     center = p;
     radius = r;
@@ -17,34 +17,34 @@ class Health{
     imgHealth.resize(230, 230);
     }
     
-  //Konstruktor
+  // Konstruktor
   Health(){
     imgHealth = loadImage("health.png");
     imgHealth.resize(230, 230);
     }
     
-  //Crta novčić
+  // Crta novcic
   void draw(){
     image(imgHealth, center.x - 122, center.y - 95);
     }
     
-  //.........................get funkcije.......................
+  //.........................Get funkcije.......................
   
-    //Vraća centar
+  // Vraca centar
   Point getCenter(){ return center; }
     
-  //Vraća radijus
+  // Vraca radijus
   int getRadius(){ return radius; }
   
-   //.........................set funkcije........................
+   //.........................Set funkcije........................
   
-    //Postavlja centar
+  // Postavlja centar
   void setCenter(int X, int Y){ setCenter(new Point(X, Y)); }
     
-  //Postavlja centar
+  // Postavlja centar
   void setCenter(Point p){ center = p;  }
     
-  //Postavlja radijus
+  // Postavlja radijus
   void setRadius(int r){ radius = r; }
   
 }

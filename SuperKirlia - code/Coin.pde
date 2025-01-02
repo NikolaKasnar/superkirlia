@@ -1,16 +1,16 @@
-//Klasa koja reprezentira novčić u igri koji se može skupiti. Jedan
-//novčić vrijedi 10 bodova, ali to je uvijek fiksno, pa nije zapisano ovdje
+// Klasa koja reprezentira novcic u igri koji se može skupiti. Jedan
+// novcic vrijedi 10 bodova, ali to je uvijek fiksno, pa nije zapisano ovdje
 class Coin{
-  //------------------podaci klase----------------
-  //Centar novčića
+  //------------------Podaci klase----------------
+  // Centar novcica
   Point center;
-  //Radijus novčića
+  // Radijus novcica
   int radius;
-  //Slika novčića
+  // Slika novčića
   PImage imgCoin;
   
-  //-------------------metode klase----------------
-  //Konstruktor
+  //-------------------Metode klase----------------
+  // Konstruktor
   Coin(Point p, int r){
     center = p;
     radius = r;
@@ -18,37 +18,34 @@ class Coin{
     imgCoin.resize(230, 230);
     }
     
-  //Konstruktor
+  // Konstruktor
   Coin(){
     imgCoin = loadImage("coin1.png");
     imgCoin.resize(230, 230);
     }
     
-  //Crta novčić
+  // Crta novcic
   void draw(){
     image(imgCoin, center.x - 122, center.y - 95);
-    /*stroke(255);
-    fill(255);
-    circle(center.getX(), center.getY(), radius);*/
     }
     
-  //.........................get funkcije.......................
+  //.........................Get funkcije.......................
   
-    //Vraća centar
+  // Vraca centar
   Point getCenter(){ return center; }
     
-  //Vraća radijus
+  // Vraca radijus
   int getRadius(){ return radius; }
   
-   //.........................set funkcije........................
+  //.........................Set funkcije........................
   
-    //Postavlja centar
+  // Postavlja centar
   void setCenter(int X, int Y){ setCenter(new Point(X, Y)); }
     
-  //Postavlja centar
+  // Postavlja centar
   void setCenter(Point p){ center = p;  }
     
-  //Postavlja radijus
+  // Postavlja radijus
   void setRadius(int r){ radius = r; }
   
 }
