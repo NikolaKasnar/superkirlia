@@ -4,6 +4,7 @@
   PImage nova;
   PImage treci;
   PImage peti;
+  PImage sesti;
   PImage menu, won, lost;
   
   //pojavi se oko Kirlie/neprijatelja kad su ozlijeđeni
@@ -22,6 +23,7 @@
   //unosenje fileova za zvuk u igru
   import processing.sound.*; 
   SoundFile background_music;
+  SoundFile boss_music;
   SoundFile enemy_sound;
   SoundFile coin_sound;
   SoundFile explosionsound;
@@ -36,12 +38,7 @@
   int flag = 0;
   
   //Glavni lik, igrac njime upravlja
-  Kirlia k2;
   Kirlia k1;
-  Kirlia k3;
-  Kirlia k4;
-  Kirlia k5;
-  Kirlia k6;
   
   //objekti klase Rectangle koji predstavljaju podloge, i pripadna lista
   Rectangle r1;
@@ -51,6 +48,7 @@
   Rectangle r7,r8;
   Rectangle r9,r10;
   Rectangle r11, r12, r13, r14;
+  Rectangle r15, r16, r17, r18;
   Rectangle[] r;
   
   //objekti klase Rectangle koji predstavljaju podove, i pripadna lista
@@ -71,6 +69,7 @@
   Enemy e2;
   Enemy e3;
   Enemy e4, e5, e6, e7;
+  Enemy e8;
   
   //objekti klase level i njihova lista, te brojač levela
   Level l;
@@ -120,6 +119,10 @@
     // Pozadina za peti i sesti level
     peti = new PImage();
     peti = loadImage("peti.jpg");
+    
+    // Pozadina za peti i sesti level
+    sesti = new PImage();
+    sesti = loadImage("sesti.jpg");
     
     pain = new PImage();
     pain = loadImage("pain.png");
@@ -277,7 +280,40 @@
     r14.setFillColor(80,200,20);
     r14.setfloor(false);
     
-    // Donje platforme u levelima(iste su za sve)
+    // Podloge za sesti level, zelena boja oznacava seriju visih levela
+    r15 = new Rectangle();
+    r15.setX(200);
+    r15.setY(550);
+    r15.setH(48);
+    r15.setW(650);
+    r15.setFillColor(80,200,20);
+    r15.setfloor(false);
+    
+    r16 = new Rectangle();
+    r16.setX(0);
+    r16.setY(400);
+    r16.setH(48);
+    r16.setW(100);
+    r16.setFillColor(80,200,20);
+    r16.setfloor(false);
+    
+    r17 = new Rectangle();
+    r17.setX(900);
+    r17.setY(400);
+    r17.setH(48);
+    r17.setW(100);
+    r17.setFillColor(80,200,20);
+    r17.setfloor(false);
+    
+    r18 = new Rectangle();
+    r18.setX(250);
+    r18.setY(250);
+    r18.setH(48);
+    r18.setW(500);
+    r18.setFillColor(80,200,20);
+    r18.setfloor(false);
+    
+    // Donje platforme u levelima(skoro su iste su za sve)
     floor = new Rectangle();
     floor.setX(0);
     floor.setY(600);
@@ -316,7 +352,7 @@
     
     floor6 = new Rectangle();
     floor6.setX(0);
-    floor6.setY(600);
+    floor6.setY(700);
     floor6.setW(1000);
     floor6.setH(48);
     floor6.setFillColor(80,200,20);
@@ -359,6 +395,13 @@
     platforms5.add(r12);
     platforms5.add(r13);
     platforms5.add(r14);
+    
+    ArrayList<Rectangle> platforms6 = new ArrayList<Rectangle>();
+    platforms6.add(floor6);
+    platforms6.add(r15);
+    platforms6.add(r16);
+    platforms6.add(r17);
+    platforms6.add(r18);
     
     //.....................inicijalizacija Kirlie......................
     
@@ -439,6 +482,19 @@
     coinsP5.add(p15);
     coinsP5.add(p16);
     coinsP5.add(p17);
+    
+    //.............inicijalizacija točaka u kojima će se pojavljivati novčići za level 6.......
+    
+    Point p18 = new Point(500,220);
+    Point p19 = new Point(500,670);
+    Point p20 = new Point(500,520);
+    Point p21 = new Point(500,220);
+    
+    ArrayList<Point> coinsP6 = new ArrayList<Point>();
+    coinsP6.add(p18);
+    coinsP6.add(p19);
+    coinsP6.add(p20);
+    coinsP6.add(p21);
    
     //.........................inicijalizacija objekata klase enemy.............
     // Neprijatelji drugopg levela
@@ -573,6 +629,25 @@
     e7.isboss(true);
     
     enemylist4.add(e7);
+    
+    // Neprijatelji četvrtog levela
+    PImage tmpimg3 = loadImage("e2.png");
+    
+    e8= new Enemy();
+    e8.setX(550);
+    e8.setY(450);
+    e8.setOgX(550);
+    e8.setOgY(400);
+    e8.setHeigth(200);
+    e8.setWidth(150);
+    e8.setDistance(100);
+    e8.setImage(tmpimg3);
+    e8.scale(150,150);
+    e8.health(5);
+    e8.isboss(true);
+    
+    ArrayList<Enemy> enemylist6 = new ArrayList<Enemy>();
+    enemylist6.add(e8);
    
    //...........................inicijalizacija objekta klase level...........
     l = new Level(4, k1, null, coinsP, p, nova, coin_sound, enemy_sound);
@@ -580,9 +655,11 @@
     l3 = new Level(6, k1, enemylist2, coinsP3, platforms3, treci, coin_sound, enemy_sound);
     l4 = new Level(4, k1, enemylist3, coinsP4, platforms4, treci, coin_sound, enemy_sound);
     l5 = new Level(5, k1, enemylist4, coinsP5, platforms5, peti, coin_sound, enemy_sound);
+    l6 = new Level(4, k1, enemylist6, coinsP6, platforms6, sesti, coin_sound, enemy_sound);
     
     
     //.........................inicijalizacija liste levela................
+    // Pri dodavanju novih levela se treba azurirati i klasa "InputControl" radi restarta novih levela
     currentLevel = 0;
     allLevels = new ArrayList<Level>();
     allLevels.add(l);
@@ -590,6 +667,7 @@
     allLevels.add(l3);
     allLevels.add(l4);
     allLevels.add(l5);
+    allLevels.add(l6);
     }
   
   //Funkcija koja crta trenutni ekran.
@@ -614,6 +692,9 @@
             }
             else if(currentLevel == 4){
               flag = l5.draw(); 
+            }
+            else if(currentLevel == 5){
+              flag = l6.draw(); 
             }
       
         }else if (flag == 0) {//crta meni (gumbi su invisible ako ih eksplicitno ne crtamo)
