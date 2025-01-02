@@ -638,9 +638,32 @@
         }else if(flag == 3){
           if(b) play(losesound);
           background(lost);
+          // Ispis konacnog rezultata
+          int health = k1.getHealth();
+          // Za svaki preostali health se dobiva 10 bodova
+          int points = k1.getPoints() + health*10;
+          stroke(#8B0000);
+          fill(#8B0000);
+          textSize(50);
+          text("FINAL SCORE", 700, 70);
+          text("HEALTH:", 690, 120);
+          text("SCORE:", 690, 170);
+          text(health, 880, 120);
+          text(points, 850, 170);
         }else if(flag == 4){
           if(b) play(winsound);
           background(won);
+          int health = k1.getHealth();
+          // Za svaki preostali health se dobiva 10 bodova
+          int points = k1.getPoints() + health*10;
+          stroke(#8B0000);
+          fill(#8B0000);
+          textSize(50);
+          text("FINAL SCORE", 700, 70);
+          text("HEALTH:", 690, 120);
+          text("SCORE:", 690, 170);
+          text(health, 880, 120);
+          text(points, 850, 170);
         }
   }
   
