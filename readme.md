@@ -1,5 +1,5 @@
 # Super Kirlia
-Dorada igrice Super Kirlia autorice Lucije Valentić (https://github.com/valucij/Super-Kirlia), sa prethodnim preinakama Ive Tutiš (https://github.com/IvaTutis/SuperKirliaGame), za zadaću iz Multimedijskih sustava.
+Dorada igrice Super Kirlia autorice Lucije Valentić (https://github.com/valucij/Super-Kirlia), sa prethodnim preinakama Ive Tutiš (https://github.com/IvaTutis/SuperKirliaGame) i Nore Berdalović(https://github.com/ring-bearer/superkirlia), za zadaću iz Multimedijskih sustava.
 
 Popis napravljenih poboljšanja projekta:\
 •	dodavanje trećeg i četvrtog levela sa novom pozadinom\
