@@ -161,8 +161,11 @@ class Kirlia extends Character{
   //Kretanje ulijevo
   void moveLeft(){ if (x>=6) x -= 6; }
   
-  //Funckija inkrementira broj bodova za 10
+  //Funckija inkrementira broj bodova za 10 pri skupljanju novcica
   void incrementPoint(){ points += 10; }
+  
+  //Funckija inkrementira broj bodova za 5 pri ubijanju neprijatelja
+  void incrementPointEnemy1(){ points += 5; }
   
   //Funckija koja inkrementira broj bodova za zadani broj
   void incrementPoint(int number){ points += number; }

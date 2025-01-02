@@ -82,13 +82,6 @@ class Level{
                 return 3;//gubitak
                 
             }else if(kirlia.getHealth() > 0 && maxPoints == collectedCoins){
-                int health = kirlia.getHealth();
-                int points = kirlia.getPoints();
-                stroke(#8B0000);
-                fill(#8B0000);
-                textSize(30);
-                text(health, 155, 35);
-                text(points, 155, 70);
                 return 2;//pobjeda
                 
             }else{
@@ -286,7 +279,10 @@ class Level{
             kirlia.px=0;
             kirlia.py=0;
             e.get(i).health--;
-            if (e.get(i).health==0) e.get(i).explode=true;
+            if (e.get(i).health==0){
+              e.get(i).explode=true;
+              kirlia.incrementPointEnemy1();
+            }
             else{
               if(!mute) enemy_sound.play();
               po+=30;
@@ -302,7 +298,10 @@ class Level{
             kirlia.px=0;
             kirlia.py=0;
             e.get(i).health--;
-            if (e.get(i).health==0) e.get(i).explode=true;
+            if (e.get(i).health==0){
+              e.get(i).explode=true;
+              kirlia.incrementPointEnemy1();
+            }
             else{
               if(!mute) enemy_sound.play();
               po+=30;

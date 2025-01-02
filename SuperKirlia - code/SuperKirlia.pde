@@ -645,7 +645,7 @@
           stroke(#8B0000);
           fill(#8B0000);
           textSize(50);
-          text("FINAL SCORE", 700, 70);
+          text("FINAL SCORE", 680, 70);
           text("HEALTH:", 690, 120);
           text("SCORE:", 690, 170);
           text(health, 880, 120);
@@ -659,7 +659,7 @@
           stroke(#8B0000);
           fill(#8B0000);
           textSize(50);
-          text("FINAL SCORE", 700, 70);
+          text("FINAL SCORE", 680, 70);
           text("HEALTH:", 690, 120);
           text("SCORE:", 690, 170);
           text(health, 880, 120);
