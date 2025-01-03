@@ -2,7 +2,7 @@
 Dorada igrice Super Kirlia autorice Lucije Valentić (https://github.com/valucij/Super-Kirlia), sa prethodnim preinakama Ive Tutiš (https://github.com/IvaTutis/SuperKirliaGame) i Nore Berdalović(https://github.com/ring-bearer/superkirlia), za zadaću iz Multimedijskih sustava.
 
 Popis napravljenih poboljšanja projekta:\
-•	Dodano prenošenje Kirlie iz jednog u drugi level pri čemu se sačuva trenutno zdravlje i rezultat Kirlije što omogučuje pamćenje do sada dobivenog rezultata\
+•	Dodano prenošenje Kirlie iz jednog u drugi level pri čemu se sačuva trenutno zdravlje i rezultat Kirlije što omogučuje pamćenje do sada dobivenog rezultata. Uz to Kirlija ostaje na istoj poziciji kao i u prošlom levelu, inspirirano igricom Bubble Bobble(https://en.wikipedia.org/wiki/Bubble_Bobble)\
 •	Dodan ispis konačnog rezultata u slučaju gubitka i pobjede\
 •	Promijenjen način bodovanja pri čemu se nagrađuje igrača koji sačuva više healtha te ubija neprijatelje:\
             -	+10 bodova – sakupljanje novčića\
@@ -17,6 +17,7 @@ Popis napravljenih poboljšanja projekta:\
 Daljnja moguća poboljšanja:\
 •	Dodati mogućnost dodavanja običnih neprijatelja i bossa u isti level bez da se svi zacrvene pri udarcu jednog od njih\
 •	Dodati health pickup-e\
+•	Dodati tranziciju iz levela u level kao u igrici Bubble Bobble\
 •	Dodati mogućnost da neprijatelji mogu pratiti Kirliju kada se nalazi na istoj platformi kao i ona\
 •	Dodavanje mogućnosti „prolaska“ kroz donju platformu pritiskom tipke strelice prema dolje ili tipke S\
 •	Dodavanje opcije za pauziranje igre\
